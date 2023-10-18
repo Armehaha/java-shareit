@@ -25,8 +25,6 @@ public class ItemRepositoryImpl implements ItemRepository {
     @Override
     public Item updateUser(ItemDto item, Long itemId, User user) {
         Item oldItem = itemMap.get(itemId);
-        System.out.println(oldItem);
-        System.out.println("---------------" + user);
         if (oldItem != null && Objects.equals(user.getId(), oldItem.getOwner())) {
             if (item.getName() != null && !item.getName().equals(oldItem.getName())) {
                 oldItem.setName(item.getName());
