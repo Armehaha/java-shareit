@@ -25,21 +25,19 @@ public class ItemRepositoryImpl implements ItemRepository {
     @Override
     public Item updateUser(ItemDto item, Long itemId, User user) {
         Item oldItem = itemMap.get(itemId);
-        if (oldItem != null && Objects.equals(user.getId(), oldItem.getOwner())) {
-            if (item.getName() != null && !item.getName().equals(oldItem.getName())) {
-                oldItem.setName(item.getName());
-            }
-            if (item.getDescription() != null && !item.getDescription().equals(oldItem.getDescription())) {
-                oldItem.setDescription(item.getDescription());
-            }
-            if (item.getAvailable() != null && item.getAvailable() != oldItem.getAvailable()) {
-                oldItem.setAvailable(item.getAvailable());
-            }
-            return oldItem;
-
-        } else {
+        if (oldItem == null || !Objects.equals(user.getId(), oldItem.getOwner())) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+        if (item.getName() != null && !item.getName().equals(oldItem.getName())) {
+            oldItem.setName(item.getName());
+        }
+        if (item.getDescription() != null && !item.getDescription().equals(oldItem.getDescription())) {
+            oldItem.setDescription(item.getDescription());
+        }
+        if (item.getAvailable() != null && item.getAvailable() != oldItem.getAvailable()) {
+            oldItem.setAvailable(item.getAvailable());
+        }
+        return oldItem;
     }
 
     @Override

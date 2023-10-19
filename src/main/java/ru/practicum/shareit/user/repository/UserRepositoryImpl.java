@@ -35,12 +35,12 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User updateUser(User user) {
         if (!userMap.containsKey(user.getId())) {
-            throw new IllegalArgumentException();
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Пользователь не найден");
         }
 
         User olduser = userMap.get(user.getId());
         if (stringSet.contains(user.getEmail()) && !user.getEmail().equals(olduser.getEmail())) {
-            throw new IllegalArgumentException();
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "такой email  уже есть");
         }
         if (user.getEmail() != null && !stringSet.contains(user.getEmail())) {
             stringSet.remove(olduser.getEmail());

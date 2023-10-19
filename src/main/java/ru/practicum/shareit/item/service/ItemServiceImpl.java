@@ -1,7 +1,9 @@
 package ru.practicum.shareit.item.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.mapper.ItemMapper;
 import ru.practicum.shareit.item.model.Item;
@@ -61,7 +63,7 @@ public class ItemServiceImpl implements ItemService {
     private User checkUser(Long userId) {
         User user = userRepository.getUser(userId);
         if (user == null) {
-            throw new RuntimeException();
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Пользователь по такому id не найден");
         }
         return user;
     }
