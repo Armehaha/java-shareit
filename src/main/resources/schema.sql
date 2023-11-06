@@ -24,6 +24,7 @@ owner_id BIGINT REFERENCES users ON DELETE CASCADE,
 request_id BIGINT REFERENCES items_requests ON DELETE CASCADE,
 CONSTRAINT items_pk PRIMARY KEY (id)
 );
+CREATE INDEX owner_idx ON items (owner_id);
 
 
 CREATE TABLE IF NOT EXISTS booking (
@@ -35,6 +36,7 @@ item_id BIGINT REFERENCES items ON DELETE CASCADE,
 booker_id BIGINT REFERENCES users ON DELETE CASCADE,
 CONSTRAINT booking_pk PRIMARY KEY (id)
 );
+CREATE INDEX booking_idx ON booking (item_id);
 
 
 CREATE TABLE IF NOT EXISTS comments (
@@ -45,3 +47,4 @@ author_id BIGINT REFERENCES users ON DELETE CASCADE,
 created TIMESTAMP NOT NULL
 );
 
+CREATE INDEX comments_idx ON comments (item_id);
