@@ -26,11 +26,11 @@ public class ItemMapper {
     }
 
     public static ItemDto toDto(Item item) {
-        return new ItemDto(item.getId(), item.getName(), item.getDescription(), item.getAvailable());
-    }
-
-    public static ItemDto itemDtoExtended(Item item, List<CommentDto> commentsByItemId) {
-        return new ItemDto(item.getId(), item.getName(), item.getDescription(), item.getAvailable(), item.getRequestId(), commentsByItemId);
+        return ItemDto.builder()
+                .id(item.getId())
+                .name(item.getName())
+                .description(item.getDescription())
+                .available(item.getAvailable()).build();
     }
 
     public static ItemBook toItemBook(Item item) {
@@ -57,6 +57,14 @@ public class ItemMapper {
             lastBooking = Optional.empty();
             nextBooking = Optional.empty();
         }
-        return new ItemDto(item.getId(), item.getName(), item.getDescription(), item.getAvailable(), lastBooking.orElse(null), nextBooking.orElse(null), itemCommentsDto);
+        return ItemDto.builder()
+                .id(item.getId())
+                .name(item.getName())
+                .description(item.getDescription())
+                .available(item.getAvailable())
+                .lastBooking(lastBooking.orElse(null))
+                .nextBooking(nextBooking.orElse(null))
+                .comments(itemCommentsDto)
+                .build();
     }
 }

@@ -1,6 +1,6 @@
 package ru.practicum.shareit.item.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -30,19 +30,12 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 
 @Service
+@RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
     private final BookingRepository bookingRepository;
-
-    @Autowired
-    public ItemServiceImpl(ItemRepository itemRepository, UserRepository userRepository, CommentRepository commentRepository, BookingRepository bookingRepository) {
-        this.itemRepository = itemRepository;
-        this.userRepository = userRepository;
-        this.commentRepository = commentRepository;
-        this.bookingRepository = bookingRepository;
-    }
 
     @Override
     @Transactional
@@ -108,7 +101,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<ItemDto> getItems(Long userId) {
         List<Item> itemsOwner = itemRepository.findItemsByOwnerId(userId);
-        List<Comment> itemsComments = commentRepository.findCommentsByItems(itemsOwner);
+        List<Comment> itemsComments = commentRepository.findCommentsByItemIn(itemsOwner);
         List<Booking> itemsBookings = bookingRepository.findBookingsByItems(itemsOwner);
         List<ItemDto> itemWithBooking = new ArrayList<>();
         for (Item item : itemsOwner) {

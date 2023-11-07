@@ -20,6 +20,4 @@ public class BookingDtoOut {
     private ItemBook item;
     @NotNull
     private long bookerId;
-
-
 }
