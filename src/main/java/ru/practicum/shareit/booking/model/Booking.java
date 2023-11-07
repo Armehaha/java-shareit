@@ -20,10 +20,10 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @FutureOrPresent
-    @Column(name = "start_date")
+    @Column(name = "start_time")
     private LocalDateTime start;
     @FutureOrPresent
-    @Column(name = "end_date")
+    @Column(name = "end_time")
     private LocalDateTime end;
     @ManyToOne
     @JoinColumn(name = "item_id")
